@@ -72,18 +72,20 @@ export function DataTable({
 
   const getSortIcon = (columnKey) => {
     if (!sortable || sortConfig.key !== columnKey) {
-      return <ChevronUp className="w-4 h-4 text-gray-300" />;
+      return <ChevronUp className="w-4 h-4 text-gray-300 dark:text-gray-600" />;
     }
     return sortConfig.direction === 'asc' 
-      ? <ChevronUp className="w-4 h-4 text-blue-500" />
-      : <ChevronDown className="w-4 h-4 text-blue-500" />;
+      ? <ChevronUp className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+      : <ChevronDown className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />;
   };
 
   return (
-    <Card className="animate-slide-in">
-      <CardHeader>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <CardTitle>{title}</CardTitle>
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div className="p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            {title}
+          </h3>
           {searchable && (
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -92,27 +94,26 @@ export function DataTable({
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm w-full sm:w-64"
               />
             </div>
           )}
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
+
+        <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
+              <tr className="bg-gray-50 dark:bg-gray-700">
                 {columns.map((column) => (
                   <th
                     key={column.key}
                     className={cn(
-                      "text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300 text-sm",
-                      sortable && "cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                      "text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300 text-sm uppercase tracking-wide border-b border-gray-200 dark:border-gray-600",
+                      sortable && "cursor-pointer hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-600"
                     )}
                     onClick={() => handleSort(column.key)}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>{column.label}</span>
                       {sortable && getSortIcon(column.key)}
                     </div>
@@ -124,10 +125,10 @@ export function DataTable({
               {paginatedData.map((item, index) => (
                 <tr
                   key={index}
-                  className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
+                  className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {columns.map((column) => (
-                    <td key={column.key} className="py-3 px-4 text-sm">
+                    <td key={column.key} className="py-3 px-4 text-sm text-gray-700 dark:text-gray-300">
                       {column.render 
                         ? column.render(item[column.key], item)
                         : item[column.key]
@@ -151,9 +152,9 @@ export function DataTable({
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150"
+                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
               
               <div className="flex items-center space-x-1">
@@ -164,10 +165,10 @@ export function DataTable({
                       key={pageNumber}
                       onClick={() => setCurrentPage(pageNumber)}
                       className={cn(
-                        "px-3 py-1 rounded-lg text-sm transition-colors duration-150",
+                        "px-3 py-1 rounded-lg text-sm font-medium",
                         currentPage === pageNumber
-                          ? "bg-blue-500 text-white"
-                          : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                          ? "bg-emerald-500 text-white"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600"
                       )}
                     >
                       {pageNumber}
@@ -179,14 +180,14 @@ export function DataTable({
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150"
+                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -1,5 +1,3 @@
-// Mock data for ADmyBRAND Insights Analytics Dashboard
-
 export const overviewMetrics = {
   revenue: {
     current: 524750,

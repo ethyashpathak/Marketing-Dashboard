@@ -11,7 +11,6 @@ import {
 import { formatCurrency, formatNumber, formatPercentage } from '../utils/helpers';
 
 export function Dashboard() {
-  // Define columns for the campaign performance table
   const campaignColumns = [
     { 
       key: 'campaign', 
@@ -77,17 +76,15 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           Dashboard Overview
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 dark:text-gray-100">
           Welcome back! Here's what's happening with your marketing campaigns today.
         </p>
       </div>
 
-      {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <MetricCard
           type="revenue"
@@ -121,16 +118,13 @@ export function Dashboard() {
         />
       </div>
 
-      {/* Charts Row */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <RevenueChart data={revenueData} />
         <EngagementChart data={userEngagementData} />
       </div>
 
-      {/* Traffic Chart */}
       <TrafficChart data={dailyTrafficData} />
 
-      {/* Campaign Performance Table */}
       <DataTable
         data={campaignPerformance}
         columns={campaignColumns}

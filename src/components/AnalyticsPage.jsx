@@ -80,7 +80,7 @@ export function AnalyticsPage() {
         {deviceData.map((device) => {
           const Icon = deviceIcons[device.device];
           return (
-            <Card key={device.device} className="animate-slide-in">
+            <Card key={device.device} className="h-full">
               <CardContent>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -117,7 +117,7 @@ export function AnalyticsPage() {
       </div>
 
       {/* Geographic Data */}
-      <Card className="animate-slide-in">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Globe className="w-5 h-5" />

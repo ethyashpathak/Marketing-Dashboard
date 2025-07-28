@@ -34,48 +34,50 @@ export function MetricCard({ type, title, current, previous, target, format = 'n
   const progress = target ? (current / target) * 100 : 0;
 
   return (
-    <Card className="animate-slide-in hover:scale-105 transition-transform duration-200">
-      <CardContent>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={cn("p-2 rounded-lg", colorMap[type])}>
-              <Icon size={20} />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {formatValue(current)}
-              </p>
-            </div>
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-3">
+          <div className={cn("p-3 rounded-xl", colorMap[type])}>
+            <Icon className="w-6 h-6" />
           </div>
-          <div className="text-right">
-            <div className={cn("flex items-center space-x-1", getChangeColor(change.isPositive))}>
-              {change.isPositive ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-              <span className="text-sm font-medium">{change.formatted}</span>
-            </div>
-            {target && (
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Target: {formatValue(target)}
-              </p>
-            )}
+          <div>
+            <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{title}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {formatValue(current)}
+            </p>
           </div>
         </div>
-        
-        {target && (
-          <div className="mt-4">
-            <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
-              <span>Progress to target</span>
-              <span>{Math.round(progress)}%</span>
-            </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div
-                className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(progress, 100)}%` }}
-              />
-            </div>
+        <div className="text-right">
+          <div className={cn("flex items-center space-x-1 px-2 py-1 rounded-lg text-sm font-semibold", 
+            change.isPositive 
+              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+          )}>
+            {change.isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+            <span>{change.formatted}</span>
           </div>
-        )}
-      </CardContent>
-    </Card>
+          {target && (
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Target: {formatValue(target)}
+            </p>
+          )}
+        </div>
+      </div>
+      
+      {target && (
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+            <span>Progress to target</span>
+            <span className="font-semibold">{Math.round(progress)}%</span>
+          </div>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div
+              className="h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-500"
+              style={{ width: `${Math.min(progress, 100)}%` }}
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
