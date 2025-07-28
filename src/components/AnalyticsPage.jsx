@@ -70,7 +70,7 @@ export function AnalyticsPage() {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           Analytics Deep Dive
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 dark:text-gray-200">
           Detailed insights into user behavior and content performance.
         </p>
       </div>

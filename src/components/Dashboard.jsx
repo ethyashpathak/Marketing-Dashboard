@@ -80,7 +80,7 @@ export function Dashboard() {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           Dashboard Overview
         </h2>
-        <p className="text-gray-600 dark:text-gray-100">
+        <p className="text-gray-600 dark:text-gray-200">
           Welcome back! Here's what's happening with your marketing campaigns today.
         </p>
       </div>
