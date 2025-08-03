@@ -28,7 +28,7 @@ export function Header({ activeTab, setActiveTab }) {
   return (
     <header className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-700/50 px-4 lg:px-8 py-6 sticky top-0 z-[9999] shadow-lg">
       <div className=" left-0 flex items-center justify-between max-w-7xl mx-auto">
-       <div className='left-0'> <Dropdown className='left-0' /></div>
+       <div className='left-0'> <Dropdown className='left-0' activeTab={activeTab} setActiveTab={setActiveTab} /></div>
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-4 group">
             
