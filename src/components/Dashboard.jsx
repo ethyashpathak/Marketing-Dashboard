@@ -9,6 +9,7 @@ import {
   dailyTrafficData 
 } from '../data/mockData';
 import { formatCurrency, formatNumber, formatPercentage } from '../utils/helpers';
+import { AnimatedSection } from './AnimatedSection';
 
 export function Dashboard() {
   const campaignColumns = [
@@ -76,64 +77,80 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          Dashboard Overview
-        </h2>
-        <p className="text-gray-600 dark:text-gray-200">
-          Welcome back! Here's what's happening with your marketing campaigns today.
-        </p>
-      </div>
+      <AnimatedSection>
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            Dashboard Overview
+          </h2>
+          <p className="text-gray-600 dark:text-gray-200">
+            Welcome back! Here's what's happening with your marketing campaigns today.
+          </p>
+        </div>
+      </AnimatedSection>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <MetricCard
-          type="revenue"
-          title="Total Revenue"
-          current={overviewMetrics.revenue.current}
-          previous={overviewMetrics.revenue.previous}
-          target={overviewMetrics.revenue.target}
-          format="currency"
-        />
-        <MetricCard
-          type="users"
-          title="Active Users"
-          current={overviewMetrics.users.current}
-          previous={overviewMetrics.users.previous}
-          target={overviewMetrics.users.target}
-        />
-        <MetricCard
-          type="conversions"
-          title="Conversions"
-          current={overviewMetrics.conversions.current}
-          previous={overviewMetrics.conversions.previous}
-          target={overviewMetrics.conversions.target}
-        />
-        <MetricCard
-          type="growth"
-          title="Growth Rate"
-          current={overviewMetrics.growth.current}
-          previous={overviewMetrics.growth.previous}
-          target={overviewMetrics.growth.target}
-          format="percentage"
-        />
+        <AnimatedSection animation="scaleIn" delay={0}>
+          <MetricCard
+            type="revenue"
+            title="Total Revenue"
+            current={overviewMetrics.revenue.current}
+            previous={overviewMetrics.revenue.previous}
+            target={overviewMetrics.revenue.target}
+            format="currency"
+          />
+        </AnimatedSection>
+        <AnimatedSection animation="scaleIn" delay={100}>
+          <MetricCard
+            type="users"
+            title="Active Users"
+            current={overviewMetrics.users.current}
+            previous={overviewMetrics.users.previous}
+            target={overviewMetrics.users.target}
+          />
+        </AnimatedSection>
+        <AnimatedSection animation="scaleIn" delay={200}>
+          <MetricCard
+            type="conversions"
+            title="Conversions"
+            current={overviewMetrics.conversions.current}
+            previous={overviewMetrics.conversions.previous}
+            target={overviewMetrics.conversions.target}
+          />
+        </AnimatedSection>
+        <AnimatedSection animation="scaleIn" delay={300}>
+          <MetricCard
+            type="growth"
+            title="Growth Rate"
+            current={overviewMetrics.growth.current}
+            previous={overviewMetrics.growth.previous}
+            target={overviewMetrics.growth.target}
+            format="percentage"
+          />
+        </AnimatedSection>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <RevenueChart data={revenueData} />
-        <EngagementChart data={userEngagementData} />
-      </div>
+      <AnimatedSection delay={200}>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <RevenueChart data={revenueData} />
+          <EngagementChart data={userEngagementData} />
+        </div>
+      </AnimatedSection>
 
-      <TrafficChart data={dailyTrafficData} />
+      <AnimatedSection delay={300}>
+        <TrafficChart data={dailyTrafficData} />
+      </AnimatedSection>
 
-      <DataTable
-        data={campaignPerformance}
-        columns={campaignColumns}
-        title="Campaign Performance"
-        searchable={true}
-        sortable={true}
-        pagination={true}
-        pageSize={6}
-      />
+      <AnimatedSection delay={400}>
+        <DataTable
+          data={campaignPerformance}
+          columns={campaignColumns}
+          title="Campaign Performance"
+          searchable={true}
+          sortable={true}
+          pagination={true}
+          pageSize={6}
+        />
+      </AnimatedSection>
     </div>
   );
 }
