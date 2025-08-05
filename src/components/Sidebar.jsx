@@ -9,6 +9,7 @@ import {
   ShoppingCart,
   X
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { cn } from '../utils/helpers';
 
 const menuItems = [
@@ -23,6 +24,17 @@ const menuItems = [
 ];
 
 export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Trigger animations when sidebar opens
+      const timer = setTimeout(() => setIsAnimated(true), 100);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimated(false);
+    }
+  }, [isOpen]);
   return (
     <>
       {/* Mobile overlay */}
@@ -39,23 +51,38 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         {/* Header section */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className={cn(
+          "p-6 border-b border-gray-200 dark:border-gray-700 transition-all duration-500 ease-out",
+          isAnimated ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        )}>
           {/* Close button for mobile */}
           <div className="lg:hidden flex justify-end mb-4">
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+              className={cn(
+                "p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 transform",
+                isAnimated ? "scale-100 rotate-0" : "scale-0 rotate-180"
+              )}
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+          <div className={cn(
+            "flex items-center space-x-3 transition-all duration-700 ease-out",
+            isAnimated ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
+          )}>
+            <div className={cn(
+              "w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center transition-all duration-500 ease-out",
+              isAnimated ? "scale-100 rotate-0" : "scale-0 rotate-180"
+            )}>
               <span className="text-white font-bold text-lg">AD</span>
             </div>
-            <div>
+            <div className={cn(
+              "transition-all duration-700 ease-out delay-200",
+              isAnimated ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            )}>
               <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 ADmyBRAND
               </h1>
@@ -68,7 +95,7 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-          {menuItems.map((item) => {
+          {menuItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
             
@@ -80,19 +107,43 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
                   onClose(); // Close mobile menu when item is selected
                 }}
                 className={cn(
-                  "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 group",
+                  "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 group transform ease-out",
                   isActive
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-100"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-100",
+                  // Staggered animation based on index
+                  isAnimated ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
                 )}
+                style={{
+                  transitionDelay: isAnimated ? `${300 + index * 100}ms` : '0ms'
+                }}
               >
                 <Icon className={cn(
-                  "w-5 h-5 transition-colors duration-200",
-                  isActive ? "text-blue-600 dark:text-blue-400" : "group-hover:text-gray-700 dark:group-hover:text-gray-300"
-                )} />
-                <span className="font-medium">{item.label}</span>
+                  "w-5 h-5 transition-all duration-300",
+                  isActive ? "text-blue-600 dark:text-blue-400" : "group-hover:text-gray-700 dark:group-hover:text-gray-300",
+                  isAnimated ? "scale-100 rotate-0" : "scale-0 rotate-45"
+                )} 
+                style={{
+                  transitionDelay: isAnimated ? `${400 + index * 100}ms` : '0ms'
+                }}
+                />
+                <span className={cn(
+                  "font-medium transition-all duration-300",
+                  isAnimated ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                )}
+                style={{
+                  transitionDelay: isAnimated ? `${450 + index * 100}ms` : '0ms'
+                }}
+                >{item.label}</span>
                 {isActive && (
-                  <div className="ml-auto w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full" />
+                  <div className={cn(
+                    "ml-auto w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full transition-all duration-300",
+                    isAnimated ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                  )}
+                  style={{
+                    transitionDelay: isAnimated ? `${500 + index * 100}ms` : '0ms'
+                  }}
+                  />
                 )}
               </button>
             );
@@ -100,18 +151,60 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
         </nav>
 
         {/* Bottom section */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 rounded-lg">
-            <div className="flex items-center space-x-3 mb-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <div className={cn(
+          "p-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-700 ease-out",
+          isAnimated ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        )}
+        style={{
+          transitionDelay: isAnimated ? `${300 + menuItems.length * 100 + 200}ms` : '0ms'
+        }}
+        >
+          <div className={cn(
+            "bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 rounded-lg transition-all duration-500 ease-out transform",
+            isAnimated ? "scale-100" : "scale-95"
+          )}
+          style={{
+            transitionDelay: isAnimated ? `${400 + menuItems.length * 100 + 200}ms` : '0ms'
+          }}
+          >
+            <div className={cn(
+              "flex items-center space-x-3 mb-2 transition-all duration-500",
+              isAnimated ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
+            )}
+            style={{
+              transitionDelay: isAnimated ? `${500 + menuItems.length * 100 + 200}ms` : '0ms'
+            }}
+            >
+              <div className={cn(
+                "w-2 h-2 bg-green-500 rounded-full animate-pulse transition-all duration-300",
+                isAnimated ? "scale-100" : "scale-0"
+              )}
+              style={{
+                transitionDelay: isAnimated ? `${600 + menuItems.length * 100 + 200}ms` : '0ms'
+              }}
+              ></div>
               <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                 System Status
               </span>
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
+            <p className={cn(
+              "text-xs text-gray-600 dark:text-gray-400 transition-all duration-500",
+              isAnimated ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+            )}
+            style={{
+              transitionDelay: isAnimated ? `${650 + menuItems.length * 100 + 200}ms` : '0ms'
+            }}
+            >
               All systems operational
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+            <p className={cn(
+              "text-xs text-gray-500 dark:text-gray-500 mt-1 transition-all duration-500",
+              isAnimated ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+            )}
+            style={{
+              transitionDelay: isAnimated ? `${700 + menuItems.length * 100 + 200}ms` : '0ms'
+            }}
+            >
               Last updated: 2 min ago
             </p>
           </div>

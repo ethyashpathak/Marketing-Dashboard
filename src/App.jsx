@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { AnalyticsPage } from './components/AnalyticsPage';
@@ -6,6 +6,12 @@ import './App.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 100); // Small delay for elements to mount
+    return () => clearTimeout(timer);
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -40,26 +46,30 @@ function App() {
 
   return (
     <div className="min-h-screen dashboard-bg relative overflow-hidden scroll-smooth">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation"></div>
-        <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation" style={{animationDelay: '4s'}}></div>
+      <div className={`absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{transitionDelay: '400ms'}}></div>
+        <div className={`absolute top-3/4 right-1/4 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{animationDelay: '2s', transitionDelay: '600ms'}}></div>
+        <div className={`absolute bottom-1/4 left-1/3 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{animationDelay: '4s', transitionDelay: '800ms'}}></div>
       </div>
 
-      <div className="relative z-10">
+      {/* The Header is now a direct child with its own animation, preserving its stacking context */}
+      <div className={`relative z-20 transition-transform duration-700 ease-out ${isLoading ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="glass-effect dark:glass-effect-dark">
           <Header activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        
-        <main className="p-6 lg:p-8 overflow-y-auto scroll-smooth">
+      </div>
+      
+      {/* The main content is animated separately */}
+      <div className="relative z-10">
+        <main className={`p-6 lg:p-8 overflow-y-auto scroll-smooth transition-all duration-700 ease-out ${isLoading ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'}`} style={{transitionDelay: '200ms'}}>
           <div className="max-w-7xl mx-auto">
             {renderContent()}
           </div>
         </main>
       </div>
 
-      <div className="absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-20 float-animation" style={{animationDelay: '1s'}}></div>
-      <div className="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full opacity-20 float-animation" style={{animationDelay: '3s'}}></div>
+      <div className={`absolute top-10 right-10 w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-20 float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{animationDelay: '1s', transitionDelay: '500ms'}}></div>
+      <div className={`absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full opacity-20 float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{animationDelay: '3s', transitionDelay: '700ms'}}></div>
     </div>
   );
 }

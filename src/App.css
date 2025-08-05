@@ -103,5 +103,64 @@
 .dropdown-menu {
   z-index: 999999999 !important;
   position: fixed !important;
+  isolation: isolate !important;
+}
+
+/* Ensure animated sections don't create stacking contexts */
+.animated-section {
+  isolation: auto !important;
+}
+
+/* Sidebar intro animations */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(10px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-5px);
+  }
+  70% {
+    transform: scale(0.95) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.sidebar-intro {
+  animation: slideInFromLeft 0.6s ease-out;
+}
+
+.sidebar-item-intro {
+  animation: bounceIn 0.5s ease-out;
+}
+
+.sidebar-logo-intro {
+  animation: popIn 0.7s ease-out;
 }
 
