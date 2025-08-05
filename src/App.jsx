@@ -9,7 +9,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 100); // Small delay for elements to mount
+    const timer = setTimeout(() => setIsLoading(false), 100); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -52,14 +52,12 @@ function App() {
         <div className={`absolute bottom-1/4 left-1/3 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse float-animation transition-transform duration-1000 ease-out ${isLoading ? 'scale-0' : 'scale-100'}`} style={{animationDelay: '4s', transitionDelay: '800ms'}}></div>
       </div>
 
-      {/* The Header is now a direct child with its own animation, preserving its stacking context */}
       <div className={`relative z-20 transition-transform duration-700 ease-out ${isLoading ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="glass-effect dark:glass-effect-dark">
           <Header activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
       </div>
       
-      {/* The main content is animated separately */}
       <div className="relative z-10">
         <main className={`p-6 lg:p-8 overflow-y-auto scroll-smooth transition-all duration-700 ease-out ${isLoading ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'}`} style={{transitionDelay: '200ms'}}>
           <div className="max-w-7xl mx-auto">

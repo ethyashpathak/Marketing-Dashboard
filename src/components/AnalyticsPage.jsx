@@ -65,7 +65,6 @@ export function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           Analytics Deep Dive
@@ -75,7 +74,6 @@ export function AnalyticsPage() {
         </p>
       </div>
 
-      {/* Device Breakdown */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {deviceData.map((device) => {
           const Icon = deviceIcons[device.device];
@@ -116,53 +114,57 @@ export function AnalyticsPage() {
         })}
       </div>
 
-      {/* Geographic Data */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Globe className="w-5 h-5" />
-            <span>Geographic Distribution</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {geographicData.map((country, index) => (
-              <div key={country.country} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    {index + 1}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Globe className="w-5 h-5" />
+                <span>Geographic Distribution</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {geographicData.map((country, index) => (
+                  <div key={country.country} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900 dark:text-gray-100">
+                          {country.country}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {formatNumber(country.users)} users ({country.percentage}%)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium text-gray-900 dark:text-gray-100">
+                        ${formatNumber(country.revenue)}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Revenue</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-gray-100">
-                      {country.country}
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {formatNumber(country.users)} users ({country.percentage}%)
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium text-gray-900 dark:text-gray-100">
-                    ${formatNumber(country.revenue)}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Revenue</p>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
 
-      {/* Top Pages Table */}
-      <DataTable
-        data={topPages}
-        columns={pageColumns}
-        title="Top Performing Pages"
-        searchable={true}
-        sortable={true}
-        pagination={true}
-        pageSize={8}
-      />
+        <div>
+          <DataTable
+            data={topPages}
+            columns={pageColumns}
+            title="Top Performing Pages"
+            searchable={true}
+            sortable={true}
+            pagination={true}
+            pageSize={8}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -49,7 +49,6 @@ function Dropdown({ activeTab, setActiveTab }) {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Dropdown toggle clicked, current state:', isDropdownOpen);
                 setIsDropdownOpen(!isDropdownOpen);
               }}
               className=" left-0 flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-2xl hover:from-blue-100 hover:to-purple-100 dark:hover:from-blue-800 dark:hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl premium-card group"
@@ -85,7 +84,6 @@ function Dropdown({ activeTab, setActiveTab }) {
                         <button
                           key={item.id}
                           onClick={() => {
-                            console.log('Navigation clicked:', item.id);
                             setActiveTab(item.id);
                             setIsDropdownOpen(false);
                           }}

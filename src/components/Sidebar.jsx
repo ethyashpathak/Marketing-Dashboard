@@ -27,17 +27,15 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
   const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      // Trigger animations when sidebar opens
-      const timer = setTimeout(() => setIsAnimated(true), 100);
-      return () => clearTimeout(timer);
-    } else {
-      setIsAnimated(false);
-    }
-  }, [isOpen]);
+      if (isOpen) {
+        const timer = setTimeout(() => setIsAnimated(true), 100);
+        return () => clearTimeout(timer);
+      } else {
+        setIsAnimated(false);
+      }
+    }, [isOpen]);
   return (
     <>
-      {/* Mobile overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -45,17 +43,14 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
         />
       )}
       
-      {/* Sidebar */}
       <aside className={cn(
         "fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto",
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
-        {/* Header section */}
         <div className={cn(
           "p-6 border-b border-gray-200 dark:border-gray-700 transition-all duration-500 ease-out",
           isAnimated ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
         )}>
-          {/* Close button for mobile */}
           <div className="lg:hidden flex justify-end mb-4">
             <button
               onClick={onClose}
@@ -68,7 +63,6 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
             </button>
           </div>
 
-          {/* Logo */}
           <div className={cn(
             "flex items-center space-x-3 transition-all duration-700 ease-out",
             isAnimated ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
@@ -93,25 +87,21 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
           </div>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
-            const isActive = activeTab === item.id;
-            
-            return (
+            const isActive = activeTab === item.id;            return (
               <button
                 key={item.id}
                 onClick={() => {
                   setActiveTab(item.id);
-                  onClose(); // Close mobile menu when item is selected
+                  onClose(); 
                 }}
                 className={cn(
                   "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 group transform ease-out",
                   isActive
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 shadow-sm"
                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-100",
-                  // Staggered animation based on index
                   isAnimated ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
                 )}
                 style={{
@@ -150,7 +140,6 @@ export function Sidebar({ isOpen, onClose, activeTab, setActiveTab }) {
           })}
         </nav>
 
-        {/* Bottom section */}
         <div className={cn(
           "p-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-700 ease-out",
           isAnimated ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
