@@ -109,7 +109,7 @@ export function DataTable({
                     key={column.key}
                     className={cn(
                       "text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300 text-sm uppercase tracking-wide border-b border-gray-200 dark:border-gray-600",
-                      sortable && "cursor-pointer hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      sortable && "cursor-pointer hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-black"
                     )}
                     onClick={() => handleSort(column.key)}
                   >
@@ -125,7 +125,7 @@ export function DataTable({
               {paginatedData.map((item, index) => (
                 <tr
                   key={index}
-                  className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-black"
                 >
                   {columns.map((column) => (
                     <td key={column.key} className="py-3 px-4 text-sm text-gray-700 dark:text-gray-300">
@@ -180,7 +180,7 @@ export function DataTable({
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800"
+                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-black bg-white dark:bg-gray-800"
               >
                 <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
